@@ -3,5 +3,5 @@ class Edge
   key :uuid, String
   key :source, String
   key :target, String
-  key :attributes, Array
+  key :edge_attributes, Array
 end
