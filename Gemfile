@@ -1,4 +1,4 @@
-gem 'sidekiq'
+gem 'sidekiq', '3.2.1'
 gem 'nokogiri'
 gem 'pry'
 gem 'mongo_mapper', '0.12.0'
