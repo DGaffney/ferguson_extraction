@@ -1,5 +1,7 @@
 class EdgeCreator
+  include Sidekiq::Worker
   def perform(raw_data, strategy)
+    self.send(strategy, raw_data)
   end
   
   def mention_grapher(raw_data)
