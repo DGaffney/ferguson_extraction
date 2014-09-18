@@ -7,6 +7,7 @@ require 'sinatra'
 require 'rest_client'
 require 'iconv'
 require 'twitter-text'
+require 'twitter'
 Dir[File.dirname(__FILE__) + '/extensions/*.rb'].each {|file| require file }
 Dir[File.dirname(__FILE__) + '/lib/*.rb'].each {|file| require file }
 Dir[File.dirname(__FILE__) + '/lib/graph/*.rb'].each {|file| require file }
