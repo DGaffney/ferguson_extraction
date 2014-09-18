@@ -4,4 +4,5 @@ class Edge
   key :source, String
   key :target, String
   key :edge_attributes, Array
+  key :type, String
 end

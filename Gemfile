@@ -1,3 +1,5 @@
+source 'https://rubygems.org'
+#gem 'igraph', '0.9.7'
 gem 'sidekiq', '3.2.1'
 gem 'nokogiri'
 gem 'pry'
