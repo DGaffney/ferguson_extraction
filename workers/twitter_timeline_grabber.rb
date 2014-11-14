@@ -1,6 +1,12 @@
 class TwitterTimelineGrabber
   include Sidekiq::Worker
-  
+
+  def self.queue_up
+    Tweet.fields(:user_id).collect(&:user_id).each_slice(100) do |user_ids|
+      TwitterTimelineGrabber.perform_async(user_ids)
+    end
+  end
+
   def keys
     [
       {consumer_key: "gkkhB8zthzG622bt9x0C3w", consumer_secret: "2xB6Jwvi24uDQCK6Y3b9WwlxGsQLeSkceVN6LDV2R4", oauth_token: "13731562-kw1GROgsjtQ9hsjgLVbWJuFTI8PfRkLsazK9raP6Y", oauth_token_secret: "2HZmhaMhfPiNi4egJO1dbnYEaFB8uFBmuL7f5wFglU"},
@@ -49,13 +55,15 @@ class TwitterTimelineGrabber
     end
   end
 
-  def grab_account(user_set)
+  def perform(user_set)
     begin
       users = client.users(user_set)
       users.each do |user|
         up = UserProfile.first_or_new(user_id: user.id)
-        up.content = user.to_hash
-        up.save!
+        if up.new?
+          up.content = user.to_hash
+          up.save!
+        end
       end
     end
   end
