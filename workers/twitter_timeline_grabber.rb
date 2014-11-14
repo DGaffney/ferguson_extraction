@@ -56,14 +56,12 @@ class TwitterTimelineGrabber
   end
 
   def perform(user_set)
-    begin
-      users = client.users(user_set)
-      users.each do |user|
-        up = UserProfile.first_or_new(user_id: user.id)
-        if up.new?
-          up.content = user.to_hash
-          up.save!
-        end
+    users = client.users(user_set)
+    users.each do |user|
+      up = UserProfile.first_or_new(user_id: user.id)
+      if up.new?
+        up.content = user.to_hash
+        up.save!
       end
     end
   end
