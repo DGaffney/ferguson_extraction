@@ -23,8 +23,11 @@ class Geo
     config_geocoder
     loc = GeoResult.first_or_new(location: location)
     if loc.new?
-      loc.content = Geocoder.search(location).first.data
-      loc.save!
+      res = Geocoder.search(location).first.data rescue nil
+      if res
+        loc.content = res 
+        loc.save!
+      end
     end
   end
 end
