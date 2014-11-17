@@ -2,8 +2,14 @@ require 'geocoder'
 class Geo
   include Sidekiq::Worker
   def self.queue_up
-    UserProfile.fields("content.location").collect(&:content).collect(&:location).collect(&:downcase).collect(&:strip).uniq.each do |loc|
-      Geo.perform_async(loc)
+    offset = 0
+    limit = 100
+    set = UserProfile.fields("content.location").offset(offset).limit(limit).to_a
+    while !set.empty?
+      set.each do |loc|
+        Geo.perform_async(loc.content.location.downcase.strip)
+      end
+      offset+=limit
     end
   end
 
