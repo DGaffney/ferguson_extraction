@@ -22,8 +22,11 @@ task :generate_geo_export do
     lat, lon = nil, nil
     if !location.nil?
       begin
-        lat, lon = GeoResult.first(location: location).first.content.point.coordinates
+        set = GeoResult.first(location: location).first.content.point.coordinates
+        lat = set.first
+        lon = set.last
       rescue
+        puts "Couldn't find: #{location}"
       end
     end
     print "."
