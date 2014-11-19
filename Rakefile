@@ -16,10 +16,10 @@ end
 
 task :generate_geo_export do
   offset = 0
-  limit = 1000
+  limit = 100000
   t_count = Tweet.count
   while offset < t_count
     GenLocExtract.perform_async(offset)
+    offset += limit
   end
-  offset += limit
 end

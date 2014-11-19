@@ -1,7 +1,7 @@
 class GenLocExtract
   include Sidekiq::Worker
   def perform(offset)
-    limit = 1000
+    limit = 100000
     # gg << ["user_id", "tweet_id", "screen_name", "mentioned_users", "mentioned_topics", "location", "lat", "lon"]
     gg = CSV.open(File.dirname(__FILE__)+"/../geo_export/geo_export_#{offset}.csv", "w")
     set = Tweet.fields(:user_id, :twitter_id, :categories, :screen_name, :content).limit(limit).offset(offset)
