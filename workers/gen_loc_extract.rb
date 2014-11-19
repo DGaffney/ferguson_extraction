@@ -9,7 +9,7 @@ class GenLocExtract
       lat, lon = nil, nil
       if !location.nil?
         begin
-          binding.pry if location == "atlanta, ga"
+          # binding.pry if location == "atlanta, ga"
           set = GeoResult.first(location: location).content.point.coordinates
           lat = set.first
           lon = set.last
